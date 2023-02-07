@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71b9237c83ee6004b983d6ed78c73e72, type: 3}
-  m_Name: GameInfoSO
+  m_Script: {fileID: 11500000, guid: 30b1b0e1174de4e4e920772325328820, type: 3}
+  m_Name: PlayerSO
   m_EditorClassIdentifier: 
-  currentLevel: 0
-  playerMoney: 0
+  speed: 10
+  rotationSpeed: 720
+  sensitivity: 100
+  acceleration: 500

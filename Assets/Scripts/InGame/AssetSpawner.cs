@@ -18,6 +18,7 @@ namespace Game
         private List<GameObject> _spawnedObjects = new List<GameObject>();
 
         private List<ICharacter> _queCharacters = new List<ICharacter>();
+        bool _assetsSending = false;
 
         IEnumerator _spawnCoroutine, _sendAssetCoroutine;
         #endregion
@@ -52,13 +53,13 @@ namespace Game
         private void spawnAsset()
         {
             GameObject temp = Instantiate(prefab, getSpawnPoint(), prefab.transform.rotation, transform);
+            _spawnedObjects.Add(temp);
             _columnCount++;
             if (_columnCount >= _stackLineCapacity)
             {
                 _columnCount = 0;
                 _lineCount++;
             }
-            _spawnedObjects.Add(temp);
         }
         private Vector3 getSpawnPoint()
         {
@@ -82,14 +83,33 @@ namespace Game
         }
         private void sendAsset()
         {
-            GameObject asset = _spawnedObjects[_spawnedObjects.Count - 1];
-            _spawnedObjects.Remove(asset);
             if (_queCharacters.Count > 0 && _queCharacters[0].canTakeAsset())
+            {
+                GameObject asset = _spawnedObjects[_spawnedObjects.Count - 1];
+                _spawnedObjects.Remove(asset);
+                _columnCount--;
+                if (_columnCount < 0) 
+                {
+                    _lineCount--;
+                    _columnCount = _stackLineCapacity - 1;
+                }
                 _queCharacters[0].takeAsset(asset);
+            }
+            else if (_queCharacters.Count > 0 && !_queCharacters[0].canTakeAsset())
+            {
+                _queCharacters.RemoveAt(0);
+                if (_queCharacters.Count == 0)
+                {
+                    if (_sendAssetCoroutine != null)
+                        StopCoroutine(_sendAssetCoroutine);
+                    _assetsSending = false;
+                }
+            }
         }
         private IEnumerator sendWithDelay()
         {
-            while (true)
+            _assetsSending = true;
+            while (_assetsSending)
             {
                 yield return new WaitUntil(() => _spawnedObjects.Count > 0 && _queCharacters.Count > 0);
                 yield return new WaitForSeconds(sendDelay);
@@ -109,22 +129,33 @@ namespace Game
         public void onCharacterEnter(Collider characterCollider)
         {
             ICharacter character = characterCollider.GetComponentInChildren<ICharacter>();
-            if (!_queCharacters.Contains(character))
-                _queCharacters.Add(character);
-            if (_sendAssetCoroutine != null && _queCharacters.Count == 0)
+            if (character != null) 
             {
-                StopCoroutine(_sendAssetCoroutine);
-                _sendAssetCoroutine = sendWithDelay();
-                StartCoroutine(_sendAssetCoroutine);
+                if (_queCharacters.Count == 0)
+                {
+                    if (_sendAssetCoroutine != null)
+                        StopCoroutine(_sendAssetCoroutine);
+                    _sendAssetCoroutine = sendWithDelay();
+                    StartCoroutine(_sendAssetCoroutine);
+                }
+                if (!_queCharacters.Contains(character))
+                    _queCharacters.Add(character);
             }
-                
             
         }
         public void onCharacterExit(Collider characterCollider)
         {
             ICharacter character = characterCollider.GetComponentInChildren<ICharacter>();
             if (_queCharacters.Contains(character))
+            {
                 _queCharacters.Remove(character);
+                if (_queCharacters.Count == 0)
+                {
+                    if (_sendAssetCoroutine != null)
+                        StopCoroutine(_sendAssetCoroutine);
+                    _assetsSending = false;
+                }
+            }        
         }
         #endregion
     }

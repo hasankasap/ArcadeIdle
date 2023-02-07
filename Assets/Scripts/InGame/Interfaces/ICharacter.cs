@@ -8,6 +8,9 @@ namespace Game
         public bool canTakeAsset();
         public GameObject dropAsset();
         public bool canDropAsset();
-        public void movement();
+        public float speed { get; set; }
+        public float sensitivity { get; set; }
+        public float rotationSpeed { get; set; }
+        public float acceleration { get; set; }
     }
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SpawnerSO
   m_EditorClassIdentifier: 
   spawnTimer: 1
+  sendDelay: 0.1
   spawnerCapacity: 12
   spawnPrefab: {fileID: 919132149155446097, guid: d80864c80908f8b4ea499f6f9e5f061b, type: 3}
