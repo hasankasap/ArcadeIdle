@@ -6,10 +6,10 @@ namespace Game
 	{
         public int currentLevel;
         public int playerMoney;
-        public int rescueTargetValue;
         public override void resetData()
         {
             currentLevel = 0;
+            playerMoney = 0;
         }
         public void increaseLevelCount()
         {
@@ -27,9 +27,6 @@ namespace Game
         {
             return playerMoney;
         }
-        public int getRescueTargetValue()
-        {
-            return rescueTargetValue;
-        }
+
     }
 }

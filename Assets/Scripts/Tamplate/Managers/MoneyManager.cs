@@ -30,7 +30,6 @@ namespace Game
         private void onMoneyAddEvent(object[] obj)
         {
             int value = (int)obj[0];
-            value *= _gameInfoSO.getRescueTargetValue();
             _gameInfoSO.sumPlayerMoney(value);
             string moneyText = MoneyTextUtility.FloatToStringConverter(value);
             EventManager.TriggerEvent(Events.UPDATE_TOTAL_MONEY_UI, new object[] { moneyText, value});
