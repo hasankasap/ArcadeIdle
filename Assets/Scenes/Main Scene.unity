@@ -584,6 +584,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 160541119}
     m_Modifications:
+    - target: {fileID: 242610372003327013, guid: 7e3de21f4db1e89439986258ac03a45b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a0f131d4c82ecf4296f5914e67fd0d7, type: 3}
+    - target: {fileID: 242610372003327015, guid: 7e3de21f4db1e89439986258ac03a45b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 110.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 242610372003327015, guid: 7e3de21f4db1e89439986258ac03a45b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 129.92
+      objectReference: {fileID: 0}
     - target: {fileID: 242610372275254512, guid: 7e3de21f4db1e89439986258ac03a45b, type: 3}
       propertyPath: m_Name
       value: UI Tutorial

@@ -70,7 +70,8 @@ namespace Game
         {
             float value = (float)obj[0];
             _totalMoney = value;
-            _totalMoneyText.text = MoneyTextUtility.FloatToStringConverter(_totalMoney);
+            if (_totalMoneyText != null)
+                _totalMoneyText.text = MoneyTextUtility.FloatToStringConverter(_totalMoney);
         }
 
 
