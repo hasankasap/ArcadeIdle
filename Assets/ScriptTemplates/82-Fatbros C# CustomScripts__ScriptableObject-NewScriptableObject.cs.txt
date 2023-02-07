@@ -1,0 +1,8 @@
+using UnityEngine;
+namespace FatBros
+{
+	[CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "ScriptableObjects/#SCRIPTNAME#")]
+	public class #SCRIPTNAME# : ScriptableObject
+	{
+	}
+}
