@@ -16,15 +16,12 @@ namespace Game
         [SerializeField] CharacterSO _characterSO;
         StackController _stackController;
         NavMeshAgent _navMeshAgent;
+        FloatingJoystick _joystick;
+        Animator _animator;
 
         [SerializeField, ReadOnly] bool _canPlay = false;
 
         private float _speedAddValue = 0;
-
-            #region INPUT
-            private Vector3 _mouseFirstPos, _mousePos, _mouseDir;
-            #endregion
-
         #endregion
 
         #region PUBLIC_VARIABLES
@@ -57,6 +54,15 @@ namespace Game
             if (_canPlay)
             {
                 movement();
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (!_navMeshAgent.isStopped)
+                        _navMeshAgent.isStopped = true;
+                    if (_animator != null)
+                    {
+                        _animator.SetBool("Run", false);
+                    }
+                }
             }
         }
         #endregion
@@ -66,45 +72,32 @@ namespace Game
         {
             _stackController = GetComponentInChildren<StackController>();
             if (_stackController != null)
-                _stackController.initialize();
+                _stackController.initialize(_characterSO.stackCapacity);
+
             _navMeshAgent= GetComponentInChildren<NavMeshAgent>();
             _navMeshAgent.speed = speed;
             _navMeshAgent.acceleration = acceleration;
             _navMeshAgent.angularSpeed = rotationSpeed;
-        }
-        private Vector3 getMouseInputDir()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _mouseFirstPos = Input.mousePosition;
-                _mouseFirstPos.x /= Screen.width;
-                _mouseFirstPos.y /= Screen.height;
-                _mouseFirstPos.z = _mouseFirstPos.y;
-                _mouseFirstPos.y = 0;
-            } 
-            else if (Input.GetMouseButton(0))
-            {
-                _mousePos = Input.mousePosition;
-                _mousePos.x /= Screen.width;
-                _mousePos.y /= Screen.height;
-                _mousePos.z = _mousePos.y;
-                _mousePos.y = 0;
-                _mouseDir = _mousePos - _mouseFirstPos;
-                _mouseFirstPos = _mousePos;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                _mouseDir = Vector3.zero;
-            }
-            return _mouseDir;
+
+            _joystick = FindObjectOfType<FloatingJoystick>();
+            _animator = GetComponentInChildren<Animator>();
         }
         private void movement()
         {
-            Vector3 tempDir = getMouseInputDir();
-            Vector3 movementDir = tempDir * sensitivity;
+            if (_joystick == null)
+                return;
+            Vector3 movementDir = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical) * sensitivity;
             if (movementDir.magnitude > .05f)
+            {
+                if (_navMeshAgent.isStopped)
+                    _navMeshAgent.isStopped = false;
                 _navMeshAgent.SetDestination(transform.position + movementDir);
-
+                if (_animator != null)
+                {
+                    _animator.SetBool("Run", true);
+                }
+            }
+                
         }
 
         #region STACK_METHODS

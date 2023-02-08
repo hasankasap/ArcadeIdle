@@ -10,10 +10,7 @@ namespace Game
         #region PRIVATE_VARIABLES
         [SerializeField] SpawnerSO _spawnerSO;
         [Space(3)]
-        [SerializeField, MyBox.Foldout("Spawned Stack")] Transform _spawnPoint;
-        [SerializeField, MyBox.Foldout("Spawned Stack")] int _stackLineCapacity;
-        [SerializeField, MyBox.Foldout("Spawned Stack")] float _spawnFrontOffset, _spawnUpOffset;
-        int _lineCount = 0, _columnCount = 0;
+        [SerializeField] StorageProperties _storageProperties;
 
         private List<GameObject> _spawnedObjects = new List<GameObject>();
 
@@ -35,10 +32,6 @@ namespace Game
         #endregion
 
         #region UNITY_METHODS
-        void Start()
-        {
-            
-        }
         void OnEnable()
         {
             EventManager.StartListening(Events.GAME_STARTED, onGameStarted);
@@ -52,27 +45,19 @@ namespace Game
         #region METHODS
         private void spawnAsset()
         {
-            GameObject temp = Instantiate(prefab, getSpawnPoint(), prefab.transform.rotation, transform);
+            GameObject temp = Instantiate(prefab, GameUtils.getStoragePoint(_storageProperties), prefab.transform.rotation, transform);
             _spawnedObjects.Add(temp);
-            _columnCount++;
-            if (_columnCount >= _stackLineCapacity)
+            _storageProperties.columnCount++;
+            if (_storageProperties.columnCount >= _storageProperties.storageLineCapacity)
             {
-                _columnCount = 0;
-                _lineCount++;
+                _storageProperties.columnCount = 0;
+                _storageProperties.lineCount++;
             }
-        }
-        private Vector3 getSpawnPoint()
-        {
-            Vector3 point = _spawnPoint.position;
-            Vector3 forwardOffset = _spawnPoint.forward * _spawnFrontOffset * _columnCount;
-            Vector3 upwardOffset = _spawnPoint.up * _spawnUpOffset * _lineCount; 
-            point += (forwardOffset + upwardOffset);
-            return point;
         }
         private IEnumerator spawnWithTimer()
         {
-            _columnCount = 0;
-            _lineCount = 0;
+            _storageProperties.columnCount = 0;
+            _storageProperties.lineCount = 0;
             while (true) 
             {
                 yield return new WaitUntil(() => _spawnedObjects.Count < capacity);
@@ -87,11 +72,11 @@ namespace Game
             {
                 GameObject asset = _spawnedObjects[_spawnedObjects.Count - 1];
                 _spawnedObjects.Remove(asset);
-                _columnCount--;
-                if (_columnCount < 0) 
+                _storageProperties.columnCount--;
+                if (_storageProperties.columnCount < 0) 
                 {
-                    _lineCount--;
-                    _columnCount = _stackLineCapacity - 1;
+                    _storageProperties.lineCount--;
+                    _storageProperties.columnCount = _storageProperties.storageLineCapacity;
                 }
                 _queCharacters[0].takeAsset(asset);
             }
@@ -100,8 +85,7 @@ namespace Game
                 _queCharacters.RemoveAt(0);
                 if (_queCharacters.Count == 0)
                 {
-                    if (_sendAssetCoroutine != null)
-                        StopCoroutine(_sendAssetCoroutine);
+                    startSendingCoroutine(false);
                     _assetsSending = false;
                 }
             }
@@ -115,6 +99,21 @@ namespace Game
                 yield return new WaitForSeconds(sendDelay);
                 sendAsset();
                 yield return new WaitForFixedUpdate();
+            }
+        }
+        private void startSendingCoroutine(bool startStatus)
+        {
+            if (startStatus)
+            {
+                if (_sendAssetCoroutine != null)
+                    StopCoroutine(_sendAssetCoroutine);
+                _sendAssetCoroutine = sendWithDelay();
+                StartCoroutine(_sendAssetCoroutine);
+            }
+            else
+            {
+                if (_sendAssetCoroutine != null)
+                    StopCoroutine(_sendAssetCoroutine);
             }
         }
         #endregion
@@ -133,10 +132,7 @@ namespace Game
             {
                 if (_queCharacters.Count == 0)
                 {
-                    if (_sendAssetCoroutine != null)
-                        StopCoroutine(_sendAssetCoroutine);
-                    _sendAssetCoroutine = sendWithDelay();
-                    StartCoroutine(_sendAssetCoroutine);
+                    startSendingCoroutine(true);
                 }
                 if (!_queCharacters.Contains(character))
                     _queCharacters.Add(character);
@@ -151,8 +147,7 @@ namespace Game
                 _queCharacters.Remove(character);
                 if (_queCharacters.Count == 0)
                 {
-                    if (_sendAssetCoroutine != null)
-                        StopCoroutine(_sendAssetCoroutine);
+                    startSendingCoroutine(false);
                     _assetsSending = false;
                 }
             }        

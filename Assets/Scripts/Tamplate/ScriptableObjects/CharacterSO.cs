@@ -5,5 +5,6 @@ namespace Game
 	public class CharacterSO : ScriptableObject
 	{
 		public float speed, rotationSpeed, sensitivity, acceleration;
+		public int stackCapacity;
 	}
 }

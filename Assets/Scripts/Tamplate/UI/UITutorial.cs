@@ -13,6 +13,7 @@ namespace Game
         [SerializeField, ReadOnly]bool _isPressed;
         [SerializeField] GameObject _tutorial, _animatons;
         [SerializeField] CanvasGroup _canvasGroup;
+        [SerializeField] Image _joystick;
         Tween _fadeOutTween;
         #region UNITY_METHODS
         void Start()
@@ -43,6 +44,7 @@ namespace Game
                 _fadeOutTween.Kill();
             _isPressed = false;
             _canvasGroup.alpha = 1;
+            _joystick.raycastTarget = false;
             _tutorial.SetActive(true);
         }
         #endregion
@@ -50,6 +52,7 @@ namespace Game
         #region ACTIONS
         public void onTutorialClosed()
         {
+            _joystick.raycastTarget = true;
             _tutorial.SetActive(false);
             EventManager.TriggerEvent(Events.GAME_STARTED, new object[] { });
         }
