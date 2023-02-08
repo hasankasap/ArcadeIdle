@@ -10,12 +10,11 @@ namespace Game
     {
         #region PRIVATE_VARIABLES
         [SerializeField] TransformerSO _transformerSO;
-        [SerializeField] StorageProperties _assetStorageProperties, _transformedStorageProperties;
+        [SerializeField] Storage _assetStorage, _transformedStorage;
 
         private List<GameObject> _storedAssets = new List<GameObject>();
         private List<ICharacter> _queCharacters = new List<ICharacter>();
 
-        int _lineCount = 0, _columnCount = 0;
         bool _assetTeking = false;
 
         IEnumerator _transformCoroutine, _takeAssetCoroutine;
@@ -34,42 +33,42 @@ namespace Game
         {
             if (_transformCoroutine != null)
                 StopCoroutine(_transformCoroutine);
-            _transformCoroutine = transformWithTimer();
+            _transformCoroutine = changeWithTimer();
             StartCoroutine(_transformCoroutine);
         }
         #endregion
 
         #region METHODS
-        private IEnumerator transformWithTimer()
+        private IEnumerator changeWithTimer()
         {
             while (true) 
             {
                 yield return new WaitUntil(() => _storedAssets.Count > 0);
                 yield return new WaitForSeconds(transformDelay);
-                transformAsset();
+                changeProduct();
                 yield return new WaitForFixedUpdate();
             }
         }
-        private void transformAsset()
+        private void changeProduct()
         {
-            _assetStorageProperties.columnCount--;
-            if (_assetStorageProperties.columnCount < 0)
+            _assetStorage.columnCount--;
+            if (_assetStorage.columnCount < 0)
             {
-                _assetStorageProperties.lineCount--;
-                _assetStorageProperties.columnCount = _assetStorageProperties.storageLineCapacity;
+                _assetStorage.lineCount--;
+                _assetStorage.columnCount = _assetStorage.storageProp.storageLineCapacity;
             }
         }
-        private IEnumerator takeAssetWithTimer()
+        private IEnumerator takeProductWithTimer()
         {
             while (_assetTeking) 
             {
                 yield return new WaitUntil(() => _storedAssets.Count < capacity && _queCharacters.Count > 0);
                 yield return new WaitForSeconds(assetTakeDelay);
-                takeAsset();
+                takeProduct();
                 yield return new WaitForFixedUpdate();
             }
         }
-        private void takeAsset()
+        private void takeProduct()
         {
             if (_queCharacters.Count > 0 && _queCharacters[0].canDropAsset())
             {
@@ -78,13 +77,13 @@ namespace Game
                 temp.transform.parent = transform;
                 _storedAssets.Add(temp);
                 temp.transform.DOLocalRotate(localAngle, .5f, RotateMode.FastBeyond360);
-                temp.transform.DOLocalJump(GameUtils.getStoragePoint(_assetStorageProperties), 2, 1, .5f);
+                temp.transform.DOLocalJump(GameUtils.getStoragePoint(_assetStorage), 2, 1, .5f);
 
-                _columnCount++;
-                if (_columnCount >= _assetStorageProperties.storageLineCapacity)
+                _assetStorage.columnCount++;
+                if (_assetStorage.columnCount >= _assetStorage.storageProp.storageLineCapacity)
                 {
-                    _columnCount = 0;
-                    _lineCount++;
+                    _assetStorage.columnCount = 0;
+                    _assetStorage.lineCount++;
                 }
             }
             else if (_queCharacters.Count > 0 && !_queCharacters[0].canDropAsset())
@@ -103,7 +102,7 @@ namespace Game
             {
                 if (_takeAssetCoroutine != null)
                     StopCoroutine(_takeAssetCoroutine);
-                _takeAssetCoroutine = takeAssetWithTimer();
+                _takeAssetCoroutine = takeProductWithTimer();
                 StartCoroutine(_takeAssetCoroutine);
             }
             else

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8eb1dccef9e83d4b91aea3e79a9359d, type: 3}
-  m_Name: SpawnerSO
+  m_Script: {fileID: 11500000, guid: 6a2a21d70eae22142868e5fec771e56f, type: 3}
+  m_Name: SpawnStoragePropSO
   m_EditorClassIdentifier: 
-  spawnTimer: 1
-  sendDelay: 0.3
-  spawnerCapacity: 12
-  spawnPrefab: {fileID: 3568569294851500197, guid: 4b3d660e51a65774cb241ef45d5b7cda, type: 3}
+  storageLineOffset: 0.3
+  storageColumnOffset: 0.8
+  storageLineCapacity: 6

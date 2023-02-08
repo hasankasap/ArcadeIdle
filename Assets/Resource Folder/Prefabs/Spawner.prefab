@@ -166,12 +166,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnerSO: {fileID: 11400000, guid: c1862e04d415bc94fb3ad049b6a657af, type: 2}
   _storageProperties:
+    storageProp: {fileID: 11400000, guid: 07b3c616d18b72b419249c5fdfe03441, type: 2}
     storagePoint: {fileID: 1944520035399289919}
-    storageLineOffset: 0.3
-    storageColumnOffset: 0.8
     columnCount: 0
     lineCount: 0
-    storageLineCapacity: 6
 --- !u!1 &1944520035399289904
 GameObject:
   m_ObjectHideFlags: 0

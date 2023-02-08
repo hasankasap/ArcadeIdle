@@ -10,7 +10,7 @@ namespace Game
         #region PRIVATE_VARIABLES
         [SerializeField] SpawnerSO _spawnerSO;
         [Space(3)]
-        [SerializeField] StorageProperties _storageProperties;
+        [SerializeField] Storage _storageProperties;
 
         private List<GameObject> _spawnedObjects = new List<GameObject>();
 
@@ -48,7 +48,7 @@ namespace Game
             GameObject temp = Instantiate(prefab, GameUtils.getStoragePoint(_storageProperties), prefab.transform.rotation, transform);
             _spawnedObjects.Add(temp);
             _storageProperties.columnCount++;
-            if (_storageProperties.columnCount >= _storageProperties.storageLineCapacity)
+            if (_storageProperties.columnCount >= _storageProperties.storageProp.storageLineCapacity)
             {
                 _storageProperties.columnCount = 0;
                 _storageProperties.lineCount++;
@@ -66,7 +66,7 @@ namespace Game
                 yield return new WaitForFixedUpdate();
             }
         }
-        private void sendAsset()
+        private void sendProduct()
         {
             if (_queCharacters.Count > 0 && _queCharacters[0].canTakeAsset())
             {
@@ -76,7 +76,7 @@ namespace Game
                 if (_storageProperties.columnCount < 0) 
                 {
                     _storageProperties.lineCount--;
-                    _storageProperties.columnCount = _storageProperties.storageLineCapacity;
+                    _storageProperties.columnCount = _storageProperties.storageProp.storageLineCapacity;
                 }
                 _queCharacters[0].takeAsset(asset);
             }
@@ -97,7 +97,7 @@ namespace Game
             {
                 yield return new WaitUntil(() => _spawnedObjects.Count > 0 && _queCharacters.Count > 0);
                 yield return new WaitForSeconds(sendDelay);
-                sendAsset();
+                sendProduct();
                 yield return new WaitForFixedUpdate();
             }
         }

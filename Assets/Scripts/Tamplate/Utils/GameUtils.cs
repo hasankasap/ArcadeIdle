@@ -24,22 +24,21 @@ namespace Game
         }
         public static class GameUtils
         {
-            public static Vector3 getStoragePoint(StorageProperties properties)
+            public static Vector3 getStoragePoint(Storage properties)
             {
                 Vector3 point = properties.storagePoint.localPosition;
-                Vector3 forwardOffset = Vector3.forward * properties.storageLineOffset * properties.columnCount;
-                Vector3 upwardOffset = Vector3.left * properties.storageColumnOffset * properties.lineCount;
+                Vector3 forwardOffset = Vector3.forward * properties.storageProp.storageLineOffset * properties.columnCount;
+                Vector3 upwardOffset = Vector3.left * properties.storageProp.storageColumnOffset * properties.lineCount;
                 point += (forwardOffset + upwardOffset);
                 return point;
             }    
         }
         [System.Serializable]
-        public class StorageProperties
+        public class Storage
         {
+            public StoragePropSO storageProp;
             public Transform storagePoint;
-            public float storageLineOffset, storageColumnOffset;
             [HideInInspector] public int columnCount, lineCount;
-            public int storageLineCapacity;
         }
         public static class MouseUtils
         {
