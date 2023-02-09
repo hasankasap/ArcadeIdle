@@ -82,6 +82,8 @@ MonoBehaviour:
   _transformerSO: {fileID: 11400000, guid: bdec54a7a9c3d2442a499325f3d0de1a, type: 2}
   _transformerInputPoint: {fileID: 5971179879999483923}
   _transformerOutputPoint: {fileID: 5971179878920196992}
+  _pickUpAreaCenter: {fileID: 8856081904890802238}
+  _dropAreaCenter: {fileID: 8856081905774178761}
 --- !u!1 &5971179879999483922
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +209,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8316862803829084295, guid: 823127261a71db1439d0048b094ac350, type: 3}
   m_PrefabInstance: {fileID: 2429281679581819579}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8856081905774178761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6580204646864356210, guid: 823127261a71db1439d0048b094ac350, type: 3}
+  m_PrefabInstance: {fileID: 2429281679581819579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4575138263155043216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,6 +274,11 @@ PrefabInstance:
 --- !u!4 &5971179879817118597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7900382971399694357, guid: fd5178ca19adc194a8e850ab1b510337, type: 3}
+  m_PrefabInstance: {fileID: 4575138263155043216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8856081904890802238 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5015100754745138094, guid: fd5178ca19adc194a8e850ab1b510337, type: 3}
   m_PrefabInstance: {fileID: 4575138263155043216}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5971179878882896581

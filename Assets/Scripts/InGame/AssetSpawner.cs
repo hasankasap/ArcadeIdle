@@ -11,6 +11,7 @@ namespace Game
         #region PRIVATE_VARIABLES
         [SerializeField] SpawnerSO _spawnerSO;
         PickUpAreaController _pickupArea;
+        [SerializeField] Transform _spawnAreaCenter;
 
         IEnumerator _spawnCoroutine;
         #endregion
@@ -59,6 +60,10 @@ namespace Game
                 yield return new WaitForSeconds(spwantTimer);
                 yield return new WaitForFixedUpdate();
             }
+        }
+        public Transform getSpawnAreaCenter()
+        {
+            return _spawnAreaCenter;
         }
         #endregion
         #region ACTIONS

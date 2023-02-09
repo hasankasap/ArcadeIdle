@@ -9,6 +9,7 @@ namespace Game
     {
         [SerializeField] Transform _trashInputPoint;
         [SerializeField] TrashCanSO _trashCanSO;
+        [SerializeField] Transform _transhCanDepositPoint;
         private List<ICharacter> _queCharacters = new List<ICharacter>();
         IEnumerator _takeAssetCoroutine;
         bool _assetTeking = false;
@@ -61,6 +62,10 @@ namespace Game
                 if (_takeAssetCoroutine != null)
                     StopCoroutine(_takeAssetCoroutine);
             }
+        }
+        public Transform getTranshCanDepositPoint()
+        {
+            return _transhCanDepositPoint;
         }
         #endregion
 

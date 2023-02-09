@@ -15,8 +15,8 @@ namespace Game
         DropAreaController _dropAreaController;
         PickUpAreaController _pickUpAreaController;
 
-        IEnumerator _transformCoroutine; //_takeAssetCoroutine;
-        private int _changeCount = 0;
+        IEnumerator _transformCoroutine;
+        [SerializeField] Transform _pickUpAreaCenter, _dropAreaCenter;
 
         #endregion
 
@@ -69,7 +69,16 @@ namespace Game
             Product tempProduct = temp.GetComponent<Product>();
             temp.transform.DOMove(spawnPos, .5f).OnComplete(()=> _pickUpAreaController.addProduct(tempProduct));
         }
+        public Transform getDropAreaCenter()
+        {
+            return _dropAreaCenter;
+        }
+        public Transform getPicUpAreaCenter()
+        {
+            return _pickUpAreaCenter;
+        }
         #endregion
+
         #region ACTIONS
         #endregion
     }

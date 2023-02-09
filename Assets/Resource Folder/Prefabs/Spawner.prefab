@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerSO: {fileID: 11400000, guid: c1862e04d415bc94fb3ad049b6a657af, type: 2}
+  _spawnAreaCenter: {fileID: 3972519690080086329}
 --- !u!1001 &1944520034389676797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,5 +265,10 @@ PrefabInstance:
 --- !u!4 &2241599063399438978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7900382971399694357, guid: fd5178ca19adc194a8e850ab1b510337, type: 3}
+  m_PrefabInstance: {fileID: 8266372564651569815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3972519690080086329 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5015100754745138094, guid: fd5178ca19adc194a8e850ab1b510337, type: 3}
   m_PrefabInstance: {fileID: 8266372564651569815}
   m_PrefabAsset: {fileID: 0}

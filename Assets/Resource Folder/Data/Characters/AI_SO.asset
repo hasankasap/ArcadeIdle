@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b1b0e1174de4e4e920772325328820, type: 3}
   m_Name: AI_SO
   m_EditorClassIdentifier: 
+  speed: 5
+  rotationSpeed: 720
+  sensitivity: 1
+  acceleration: 50
+  stackCapacity: 5
