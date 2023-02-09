@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a2a21d70eae22142868e5fec771e56f, type: 3}
-  m_Name: AssetStoragePropSO
+  m_Name: ProductStoragePropSO
   m_EditorClassIdentifier: 
   storageLineOffset: 0.3
   storageColumnOffset: 0.8
   storageLineCapacity: 6
+  storageCapacity: 12

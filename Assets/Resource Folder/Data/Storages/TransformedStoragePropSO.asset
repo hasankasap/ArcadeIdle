@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a21d70eae22142868e5fec771e56f, type: 3}
   m_Name: TransformedStoragePropSO
   m_EditorClassIdentifier: 
-  storageLineOffset: 0.3
+  storageLineOffset: 0.8
   storageColumnOffset: 0.8
-  storageLineCapacity: 6
+  storageLineCapacity: 2
+  storageCapacity: 4
+  productType: 1

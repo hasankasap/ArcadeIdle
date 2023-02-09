@@ -1,3 +1,4 @@
+using Game.Utils;
 using UnityEngine;
 namespace Game
 {
@@ -6,5 +7,7 @@ namespace Game
 	{
         public float storageLineOffset, storageColumnOffset;
         public int storageLineCapacity;
+        public int storageCapacity;
+        public ProductTypes productType;
     }
 }

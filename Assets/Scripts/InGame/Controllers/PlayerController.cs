@@ -1,9 +1,7 @@
-using DG.Tweening.Plugins.Options;
 using Game.Utils;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,8 +16,6 @@ namespace Game
         NavMeshAgent _navMeshAgent;
         FloatingJoystick _joystick;
         Animator _animator;
-
-        [SerializeField, ReadOnly] bool _canPlay = false;
 
         private float _speedAddValue = 0;
         #endregion
@@ -101,30 +97,41 @@ namespace Game
         }
 
         #region STACK_METHODS
-        public void takeAsset(GameObject asset)
+        public void takeProducts(Product asset)
         {
             if (_stackController != null)
                 _stackController.addStack(asset);
         }
 
-        public bool canTakeAsset()
+        public bool canTakeProducts()
         {
             if (_stackController != null)
                 return !_stackController.isStackFull();
             return false;
         }
 
-        public GameObject dropAsset()
+        public Product dropProductsWithType(ProductTypes type)
         {
             if (_stackController == null)
                 return null;
-            return _stackController.getLastAsset();
+            return _stackController.getLastProductWithType(type);
         }
 
-        public bool canDropAsset()
+        public bool canDropWantedProductTypes(ProductTypes type)
         {
             if (_stackController != null)
-                return _stackController.isStackHasAsset();
+                return _stackController.isStackHasWantedProducts(type);
+            return false;
+        }
+        public Product dropToTrash()
+        {
+            return _stackController.getLastProduct();
+        }
+
+        public bool canDropProductToTrash()
+        {
+            if (_stackController != null)
+                return _stackController.isStackHasAnyProduct();
             return false;
         }
         #endregion

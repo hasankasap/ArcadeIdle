@@ -22,24 +22,6 @@ namespace Game
             public static string UPDATE_TOTAL_MONEY_UI = "UPDATE_TOTAL_MONEY_UI";
             #endregion
         }
-        public static class GameUtils
-        {
-            public static Vector3 getStoragePoint(Storage properties)
-            {
-                Vector3 point = properties.storagePoint.localPosition;
-                Vector3 forwardOffset = Vector3.forward * properties.storageProp.storageLineOffset * properties.columnCount;
-                Vector3 upwardOffset = Vector3.left * properties.storageProp.storageColumnOffset * properties.lineCount;
-                point += (forwardOffset + upwardOffset);
-                return point;
-            }    
-        }
-        [System.Serializable]
-        public class Storage
-        {
-            public StoragePropSO storageProp;
-            public Transform storagePoint;
-            [HideInInspector] public int columnCount, lineCount;
-        }
         public static class MouseUtils
         {
             public static bool mouseIsOnUI()
@@ -83,6 +65,12 @@ namespace Game
                 else
                     return number.ToString();
             }
+        }
+
+        public enum ProductTypes
+        {
+            Product,
+            TransformedProduct,
         }
     }
 }
